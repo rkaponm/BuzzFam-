@@ -1,0 +1,289 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const services = [
+  {
+    icon: '🎯',
+    title: 'Brand Strategy',
+    body: 'Positioning, messaging, and identity work that makes your brand impossible to ignore.',
+  },
+  {
+    icon: '📣',
+    title: 'Creative Campaigns',
+    body: 'Concepts, copy, and content that stop the scroll and start conversations.',
+  },
+  {
+    icon: '📈',
+    title: 'Media Buying',
+    body: 'Data-driven paid social, search, and display that put your budget where it performs.',
+  },
+  {
+    icon: '🤝',
+    title: 'Social & Community',
+    body: 'Always-on social management that turns followers into a loyal BuzzFam.',
+  },
+];
+
+const stats = [
+  { value: '250+', label: 'Campaigns launched' },
+  { value: '4.2x', label: 'Avg. return on ad spend' },
+  { value: '60M+', label: 'Impressions delivered' },
+];
+---
+
+<Layout>
+  <Header />
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container hero-inner">
+        <p class="eyebrow">BuzzFam Advertising</p>
+        <h1>We make brands<br /><span class="grad">worth buzzing about.</span></h1>
+        <p class="lede">
+          A full-service advertising studio building creative campaigns, sharp
+          strategy, and media that moves the needle for ambitious brands.
+        </p>
+        <div class="hero-cta">
+          <a href="#contact" class="btn btn-primary">Start a project</a>
+          <a href="#work" class="btn btn-ghost">See our work</a>
+        </div>
+        <ul class="stats">
+          {
+            stats.map((s) => (
+              <li>
+                <strong>{s.value}</strong>
+                <span>{s.label}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="section">
+      <div class="container">
+        <p class="eyebrow">What we do</p>
+        <h2>Everything your brand needs to break through.</h2>
+        <div class="cards">
+          {
+            services.map((s) => (
+              <article class="card">
+                <span class="card-icon" aria-hidden="true">{s.icon}</span>
+                <h3>{s.title}</h3>
+                <p>{s.body}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Work placeholder -->
+    <section id="work" class="section section-alt">
+      <div class="container">
+        <p class="eyebrow">Selected work</p>
+        <h2>Case studies coming soon.</h2>
+        <p class="muted max-prose">
+          We're putting together a showcase of recent campaigns. Want a preview
+          of results we've driven for brands like yours? Reach out below.
+        </p>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="section">
+      <div class="container about-grid">
+        <div>
+          <p class="eyebrow">About us</p>
+          <h2>A small, senior team that treats your budget like our own.</h2>
+        </div>
+        <div class="max-prose">
+          <p class="muted">
+            BuzzFam is a tight-knit crew of strategists, creatives, and media
+            buyers. No bloated retainers, no junior hand-offs — just the people
+            who pitch your work doing the work. We measure success the only way
+            that matters: results you can take to the bank.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section section-alt">
+      <div class="container contact">
+        <p class="eyebrow">Get in touch</p>
+        <h2>Let's get your brand buzzing.</h2>
+        <p class="muted">
+          Tell us about your goals and we'll get back to you within one business
+          day.
+        </p>
+        <a class="btn btn-primary" href="mailto:hello@buzzfam.example.com">
+          hello@buzzfam.example.com
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--bf-accent);
+    margin: 0 0 0.75rem;
+  }
+
+  .muted {
+    color: var(--bf-text-muted);
+  }
+
+  .max-prose {
+    max-width: 56ch;
+  }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(3.5rem, 10vw, 7rem);
+    background:
+      radial-gradient(
+        60% 80% at 15% 0%,
+        rgba(255, 93, 162, 0.22),
+        transparent 60%
+      ),
+      radial-gradient(
+        50% 70% at 95% 20%,
+        rgba(255, 214, 10, 0.18),
+        transparent 60%
+      );
+  }
+
+  .hero h1 {
+    font-size: clamp(2.4rem, 6vw, 4.25rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .grad {
+    background: linear-gradient(90deg, var(--bf-accent), var(--bf-accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .lede {
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    color: var(--bf-text-muted);
+    max-width: 52ch;
+  }
+
+  .hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 3rem 0 0;
+  }
+
+  .stats strong {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+  }
+
+  .stats span {
+    color: var(--bf-text-muted);
+    font-size: 0.95rem;
+  }
+
+  /* Sections */
+  .section {
+    padding-block: clamp(3rem, 8vw, 5.5rem);
+  }
+
+  .section h2 {
+    font-size: clamp(1.7rem, 4vw, 2.6rem);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    max-width: 20ch;
+  }
+
+  .section-alt {
+    background: var(--bf-bg-soft);
+  }
+
+  /* Cards */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .card {
+    background: rgba(244, 243, 251, 0.04);
+    border: 1px solid rgba(244, 243, 251, 0.08);
+    border-radius: var(--bf-radius);
+    padding: 1.6rem;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 214, 10, 0.4);
+  }
+
+  .card-icon {
+    font-size: 1.8rem;
+  }
+
+  .card h3 {
+    margin-top: 0.75rem;
+    font-size: 1.2rem;
+  }
+
+  .card p {
+    color: var(--bf-text-muted);
+    margin: 0;
+  }
+
+  /* About */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  @media (max-width: 760px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Contact */
+  .contact h2 {
+    max-width: none;
+  }
+
+  .contact .btn {
+    margin-top: 1.5rem;
+  }
+</style>
