@@ -1,0 +1,10 @@
+# Netlify configuration for the BuzzFam Advertising site.
+# Static Astro build — no adapter or runtime is required, Netlify
+# serves the prerendered `dist/` directory directly.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"

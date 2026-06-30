@@ -85,14 +85,17 @@ build catches most breakage).
 
 ## Deployment
 
-- **Host:** Cloudflare Pages (static). `wrangler.toml` declares
-  `pages_build_output_dir = "dist"`; no Astro adapter is needed since the site
-  is fully prerendered.
-- **Build settings** (Pages → Connect to Git): build command `npm run build`,
-  output directory `dist`, framework preset Astro. Every push to `main`
-  triggers a production deploy once the repo is connected.
-- **Domain:** add `buzzfam.biz` as a custom domain under the Pages project and
-  point DNS at it in the Cloudflare dashboard.
+- **Host:** Netlify (static). `netlify.toml` declares the build command
+  (`npm run build`) and publish directory (`dist`); no Astro adapter is needed
+  since the site is fully prerendered.
+- **Build settings** (Netlify → Add new site → Import from Git): build command
+  `npm run build`, publish directory `dist`. These are read from `netlify.toml`,
+  so the dashboard defaults can be left as-is. Every push to `main` triggers a
+  production deploy once the repo is connected; deploy previews are built for
+  pull requests.
+- **Domain:** add `buzzfam.biz` as a custom domain under Site configuration →
+  Domain management and point DNS at Netlify (either via Netlify DNS or the
+  provided `CNAME`/`A` records).
 
 ## Git workflow
 
@@ -120,8 +123,4 @@ build catches most breakage).
 
 ## Not yet decided
 
-- **Deployment / hosting** — no deploy config committed. The build output is a
-  static `dist/`, so any static host (Vercel, Netlify, Cloudflare Pages, GitHub
-  Pages) works. Add the chosen platform's config and a "Deployment" section
-  here when decided.
 - **Production domain** and real contact details (see placeholders above).
