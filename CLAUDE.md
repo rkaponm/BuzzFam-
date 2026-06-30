@@ -79,9 +79,20 @@ build catches most breakage).
 - **SEO:** every page renders through `Layout.astro`, which sets `<title>`,
   meta description, canonical, and Open Graph tags from `title`/`description`
   props. Pass those props when adding a page.
-- **Placeholders:** `astro.config.mjs` `site` and the contact email
-  (`hello@buzzfam.example.com`) are placeholders — update them when the real
-  domain and contact details are known.
+- **Production domain:** `buzzfam.biz`. `astro.config.mjs` `site` and the
+  contact email (`hello@buzzfam.biz`) point at it. Update both together if the
+  domain ever changes.
+
+## Deployment
+
+- **Host:** Cloudflare Pages (static). `wrangler.toml` declares
+  `pages_build_output_dir = "dist"`; no Astro adapter is needed since the site
+  is fully prerendered.
+- **Build settings** (Pages → Connect to Git): build command `npm run build`,
+  output directory `dist`, framework preset Astro. Every push to `main`
+  triggers a production deploy once the repo is connected.
+- **Domain:** add `buzzfam.biz` as a custom domain under the Pages project and
+  point DNS at it in the Cloudflare dashboard.
 
 ## Git workflow
 
