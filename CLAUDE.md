@@ -6,70 +6,111 @@ Guidance for AI assistants (and humans) working in this repository.
 
 **BuzzFam Advertising — official website.**
 
-This is the source repository for BuzzFam Advertising's official website.
+A marketing site for BuzzFam Advertising, a full-service advertising studio
+(brand strategy, creative campaigns, media buying, social). Built as a fast,
+SEO-friendly static site.
 
-## Current state (read this first)
+## Tech stack
 
-This repository is **greenfield**. As of this writing it contains only:
+- **Framework:** [Astro](https://astro.build) (v4) — static output, minimal
+  client JS.
+- **Language:** TypeScript (strict) for component frontmatter; `.astro`
+  component files with scoped `<style>` blocks.
+- **Styling:** plain CSS. Global tokens and base styles live in
+  `src/layouts/Layout.astro` (`:root` custom properties like `--bf-accent`);
+  component-specific styles are scoped inside each `.astro` file.
+- **Package manager:** npm (`package-lock.json` is committed).
+- **Node:** v22 (matches the dev environment).
+
+There is **no CSS framework, no React/Vue/Svelte integration, and no test
+runner** yet. Don't assume any are present — add and document them here in the
+same change if a task calls for one.
+
+## Project structure
 
 ```
 .
-├── README.md     # one-line project description
-└── CLAUDE.md     # this file
+├── astro.config.mjs        # Astro config; `site` URL drives canonical links
+├── tsconfig.json           # extends astro/tsconfigs/strict
+├── package.json            # scripts + deps
+├── public/                 # static assets served as-is (favicon, etc.)
+│   └── favicon.svg
+└── src/
+    ├── layouts/
+    │   └── Layout.astro     # HTML shell, <head> meta/OG tags, global styles
+    ├── components/
+    │   ├── Header.astro     # sticky nav
+    │   └── Footer.astro
+    └── pages/
+        └── index.astro      # homepage (file-based routing)
 ```
 
-There is **no application code, build system, package manifest, framework, or
-tooling yet**. Do not assume a tech stack exists — none has been chosen. When a
-task implies one (e.g. "add a contact page"), either:
+Astro uses **file-based routing**: a `.astro` file in `src/pages/` becomes a
+route (`src/pages/about.astro` → `/about`). Anything in `public/` is served
+from the site root unchanged.
 
-1. Use the stack already present in the repo if code has been added since this
-   file was written (check first — see "Keeping this file current"), or
-2. If still greenfield, confirm the intended stack with the user before
-   scaffolding, then update this file to reflect what was chosen.
+## Development
 
-Do not invent a framework, directory layout, or conventions and present them as
-established. Treat anything not visible in the working tree as undecided.
+```bash
+npm install        # install dependencies
+npm run dev        # local dev server with HMR at http://localhost:4321
+npm run build      # production build to dist/
+npm run preview    # serve the built dist/ locally
+npm run check      # astro check — TypeScript/template diagnostics
+```
 
-## Git workflow & conventions
+Before committing structural or component changes, run `npm run build` and
+`npm run check` and make sure both pass (the build is static, so a passing
+build catches most breakage).
 
-These are the conventions actually in evidence in this repo's history and
-branch setup — follow them.
+## Conventions
+
+- **Components** are `PascalCase.astro` in `src/components/`; layouts in
+  `src/layouts/`; routes in `src/pages/`.
+- **Styling:** prefer scoped `<style>` in the component. Reach for the global
+  `:root` tokens (`--bf-bg`, `--bf-accent`, `--bf-accent-2`, `--bf-text`,
+  `--bf-text-muted`, `--bf-radius`, `--bf-max`) instead of hard-coding the
+  brand palette, so the look stays consistent. Shared utility classes
+  (`.container`, `.btn`, `.btn-primary`, `.btn-ghost`) are defined globally in
+  `Layout.astro`.
+- **Content data** for repeated UI (services, stats, nav links) is defined as
+  arrays in component frontmatter and rendered with `.map()` — keep that
+  pattern rather than copy-pasting markup.
+- **SEO:** every page renders through `Layout.astro`, which sets `<title>`,
+  meta description, canonical, and Open Graph tags from `title`/`description`
+  props. Pass those props when adding a page.
+- **Placeholders:** `astro.config.mjs` `site` and the contact email
+  (`hello@buzzfam.example.com`) are placeholders — update them when the real
+  domain and contact details are known.
+
+## Git workflow
 
 - **Default branch:** `main`.
-- **Feature branches:** use the `claude/<short-kebab-description>` naming
-  pattern (e.g. `claude/claude-md-docs-2014kj`). Develop on a feature branch,
-  never commit directly to `main`.
-- **Commits:** write clear, descriptive, imperative-mood messages
-  (e.g. "Add contact form to homepage"). Keep commits focused.
-- **Pushing:** push with `git push -u origin <branch-name>`. Do **not** open a
-  pull request unless the user explicitly asks for one.
-- **Merged PRs are final:** if a feature branch's PR has already merged, start
-  follow-up work fresh from the latest `main` rather than stacking new commits
-  on already-merged history.
+- **Feature branches:** `claude/<short-kebab-description>`
+  (e.g. `claude/claude-md-docs-2014kj`). Develop on a feature branch; never
+  commit directly to `main`.
+- **Commits:** clear, imperative-mood messages; keep them focused.
+- **Pushing:** `git push -u origin <branch-name>`. Don't open a pull request
+  unless explicitly asked.
+- **Merged PRs are final:** if a branch's PR has merged, start follow-up work
+  fresh from the latest `main` rather than stacking onto merged history.
 
 ## Working agreements for assistants
 
-- **Be honest about state.** This is a near-empty repo. Don't describe
-  structure, scripts, or workflows that don't exist. If asked "how do I run the
-  tests," the correct answer today is "there is no test setup yet."
-- **Scaffold deliberately.** When introducing the first real code, prefer a
-  conventional, well-supported layout for the chosen stack and document it here
-  in the same change.
-- **Keep secrets out of git.** No API keys, tokens, or `.env` files committed.
-  Add a `.gitignore` as soon as a stack is chosen.
-- **Verify before claiming done.** Once tooling exists, run the project's build
-  / lint / tests and report real results.
+- **Be honest about state.** Describe only what exists. There's no test suite
+  today — say so rather than inventing one.
+- **Verify before claiming done.** Run `npm run build` / `npm run check` and
+  report real results.
+- **Keep secrets out of git.** No API keys or `.env` files committed
+  (`.gitignore` already excludes `.env*`).
+- **Keep this file current.** When you change the stack, structure, scripts,
+  conventions, or add deployment config, update the matching section here in
+  the same change.
 
-## Keeping this file current
+## Not yet decided
 
-This file describes a project that will grow. When you add or change anything
-structural — a framework, a build tool, a directory layout, scripts, deploy
-config, test setup — **update the relevant section of this file in the same
-change** so it always reflects the real state of the codebase. Sections to add
-once they apply:
-
-- **Tech stack** — language(s), framework, package manager.
-- **Project structure** — what lives where.
-- **Development** — install, run-locally, build, and test commands.
-- **Deployment** — how the site is built and published, and where it's hosted.
-- **Conventions** — formatting, linting, naming, component/style patterns.
+- **Deployment / hosting** — no deploy config committed. The build output is a
+  static `dist/`, so any static host (Vercel, Netlify, Cloudflare Pages, GitHub
+  Pages) works. Add the chosen platform's config and a "Deployment" section
+  here when decided.
+- **Production domain** and real contact details (see placeholders above).

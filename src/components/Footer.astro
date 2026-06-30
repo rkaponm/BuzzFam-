@@ -1,0 +1,64 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span class="brand-mark" aria-hidden="true">🐝</span>
+      <strong>BuzzFam Advertising</strong>
+      <p>Campaigns that get your brand buzzing.</p>
+    </div>
+    <nav aria-label="Footer">
+      <a href="#services">Services</a>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+  <div class="container footer-bottom">
+    <small>&copy; {year} BuzzFam Advertising. All rights reserved.</small>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid rgba(244, 243, 251, 0.08);
+    padding-top: 3rem;
+    margin-top: 4rem;
+    background: var(--bf-bg-soft);
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: space-between;
+  }
+
+  .footer-brand p {
+    color: var(--bf-text-muted);
+    margin: 0.35rem 0 0;
+    max-width: 26ch;
+  }
+
+  .footer-inner nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .footer-inner nav a {
+    color: var(--bf-text-muted);
+    font-weight: 600;
+  }
+
+  .footer-inner nav a:hover {
+    color: var(--bf-accent);
+  }
+
+  .footer-bottom {
+    padding-block: 1.5rem 2rem;
+    color: var(--bf-text-muted);
+  }
+</style>
