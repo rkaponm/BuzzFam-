@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Guidance for AI assistants (and humans) working in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project
 
@@ -20,7 +20,8 @@ SEO-friendly static site.
   `src/layouts/Layout.astro` (`:root` custom properties like `--bf-accent`);
   component-specific styles are scoped inside each `.astro` file.
 - **Package manager:** npm (`package-lock.json` is committed).
-- **Node:** v22 (matches the dev environment).
+- **Node:** v22 (pinned for Netlify builds via `NODE_VERSION` in
+  `netlify.toml`; matches the dev environment).
 
 There is **no CSS framework, no React/Vue/Svelte integration, and no test
 runner** yet. Don't assume any are present — add and document them here in the
@@ -31,11 +32,13 @@ same change if a task calls for one.
 ```
 .
 ├── astro.config.mjs        # Astro config; `site` URL drives canonical links
+├── netlify.toml            # Netlify build command, publish dir, Node version
 ├── tsconfig.json           # extends astro/tsconfigs/strict
 ├── package.json            # scripts + deps
 ├── public/                 # static assets served as-is (favicon, etc.)
 │   └── favicon.svg
 └── src/
+    ├── env.d.ts             # references Astro's generated types
     ├── layouts/
     │   └── Layout.astro     # HTML shell, <head> meta/OG tags, global styles
     ├── components/
@@ -48,6 +51,11 @@ same change if a task calls for one.
 Astro uses **file-based routing**: a `.astro` file in `src/pages/` becomes a
 route (`src/pages/about.astro` → `/about`). Anything in `public/` is served
 from the site root unchanged.
+
+The site is currently a **single page**: `index.astro` renders hero, services,
+work, about, and contact sections, and the header nav links are hash anchors
+(`#services`, `#work`, `#about`, `#contact`) into it. If you add real routes,
+update the nav links in `Header.astro` accordingly.
 
 ## Development
 
@@ -121,6 +129,10 @@ build catches most breakage).
   conventions, or add deployment config, update the matching section here in
   the same change.
 
-## Not yet decided
+## Placeholder content
 
-- **Production domain** and real contact details (see placeholders above).
+- The **"Selected work" section** on the homepage is a "case studies coming
+  soon" placeholder — no real case studies exist yet.
+- The **hero stats** (campaigns launched, ROAS, impressions) in
+  `index.astro` are marketing copy, not sourced figures; confirm with the
+  client before treating them as facts.
