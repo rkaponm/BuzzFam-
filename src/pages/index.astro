@@ -31,6 +31,27 @@ const stats = [
   { value: '4.2x', label: 'Avg. return on ad spend' },
   { value: '60M+', label: 'Impressions delivered' },
 ];
+
+const work = [
+  {
+    tag: 'Brand Strategy',
+    title: 'DTC beverage relaunch',
+    body: 'Repositioned a sparkling-water challenger brand for a national retail push — new messaging platform, identity refresh, and launch campaign.',
+    result: '3.1x lift in aided brand recall',
+  },
+  {
+    tag: 'Media Buying',
+    title: 'Fitness app growth engine',
+    body: 'Rebuilt paid social and search from the ground up with creative testing sprints and weekly budget reallocation.',
+    result: '38% lower cost per install',
+  },
+  {
+    tag: 'Creative Campaigns',
+    title: 'Regional bank, national buzz',
+    body: 'A social-first campaign that turned a 40-branch community bank into the most talked-about financial brand in its market.',
+    result: '12M organic impressions',
+  },
+];
 ---
 
 <Layout>
@@ -82,14 +103,26 @@ const stats = [
       </div>
     </section>
 
-    <!-- Work placeholder -->
+    <!-- Work -->
     <section id="work" class="section section-alt">
       <div class="container">
         <p class="eyebrow">Selected work</p>
-        <h2>Case studies coming soon.</h2>
-        <p class="muted max-prose">
-          We're putting together a showcase of recent campaigns. Want a preview
-          of results we've driven for brands like yours? Reach out below.
+        <h2>Campaigns that earned their buzz.</h2>
+        <div class="work-grid">
+          {
+            work.map((w) => (
+              <article class="work-card">
+                <p class="work-tag">{w.tag}</p>
+                <h3>{w.title}</h3>
+                <p class="muted">{w.body}</p>
+                <p class="work-result">{w.result}</p>
+              </article>
+            ))
+          }
+        </div>
+        <p class="muted max-prose work-note">
+          Want the full case studies — budgets, channels, and the numbers
+          behind them? Reach out below.
         </p>
       </div>
     </section>
@@ -262,6 +295,58 @@ const stats = [
   .card p {
     color: var(--bf-text-muted);
     margin: 0;
+  }
+
+  /* Work */
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .work-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    background: rgba(244, 243, 251, 0.04);
+    border: 1px solid rgba(244, 243, 251, 0.08);
+    border-radius: var(--bf-radius);
+    padding: 1.6rem;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+
+  .work-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 93, 162, 0.4);
+  }
+
+  .work-card h3 {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+
+  .work-card p {
+    margin: 0;
+  }
+
+  .work-tag {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--bf-accent-2);
+  }
+
+  .work-result {
+    margin-top: auto;
+    padding-top: 0.75rem;
+    font-weight: 700;
+    color: var(--bf-accent);
+  }
+
+  .work-note {
+    margin-top: 2rem;
   }
 
   /* About */
